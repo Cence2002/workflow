@@ -1,0 +1,25 @@
+{
+  "name": "Workflow Toolbox",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "features": {},
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/bence/.ssh,type=bind,consistency=cached"
+  ],
+  "remoteUser": "bence",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode-remote.remote-containers",
+        "googlecloudtools.cloudcode"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  "postCreateCommand": "echo 'Devcontainer is ready'"
+}
+
