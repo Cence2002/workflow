@@ -54,11 +54,9 @@ if [ ! -f "$SSH_KEY_PRIVATE" ]; then
 fi
 
 echo "[setup-host] Setting up git"
-if ! git config --global user.name &> /dev/null; then
-  git config --global user.name "$USER"
-fi
-if ! git config --global user.email &> /dev/null; then
-  git config --global user.email "$EMAIL"
-fi
+git config --global user.name "$GIT_USER"
+git config --global user.email "$GIT_EMAIL"
+git config --global core.autocrlf input
+git config --global core.eol lf
 
 echo "[setup-host] Done"

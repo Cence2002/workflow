@@ -1,6 +1,14 @@
 # Workflow Project
 
-This project provides scripts to manage Google Cloud VMs for development. It includes a Development Container to ensure a consistent environment across different host operating systems (Windows, macOS, Linux).
+This project provides scripts to manage Google Cloud VMs for development and a Development Container to ensure a consistent environment.
+
+On any machine (local or VM), the recommended layout is:
+
+```text
+~/projects/
+  workflow/         # this repo
+  <your-projects>/  # created via scripts/create-project.sh
+```
 
 ## Getting Started
 
@@ -8,26 +16,39 @@ This project provides scripts to manage Google Cloud VMs for development. It inc
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (running)
 - [VS Code](https://code.visualstudio.com/) or [Cursor](https://cursor.sh/) with the **Dev Containers** extension installed ([ms-vscode-remote.remote-containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers))
 
-### using the Dev Container
+### Cloning
 
-The Dev Container provides all necessary tools (`gcloud`, `git`, `ssh`) and mounts your local SSH directory so keys and configurations are shared.
+On a new machine or VM:
 
-1.  Open this folder in VS Code or Cursor.
-2.  Click **Reopen in Container** when prompted (or run the command from the Command Palette: `Cmd+Shift+P` > `Dev Containers: Reopen in Container`).
-3.  Once the container creates and connects, open a terminal.
+```bash
+mkdir -p ~/projects
+cd ~/projects
+git clone git@github.com:Cence2002/workflow.git workflow
+cd workflow
+```
+
+### Using the Dev Container
+
+1. Open `~/projects/workflow` in VS Code or Cursor.
+2. Click **Reopen in Container** when prompted.
+
+Inside the devcontainer:
+* `$HOME` is `/home/bence`.
+* `$HOME/projects` is a bind-mount of the host `~/projects`.
 
 ### Setup
 
-Run the setup script inside the container to configure your environment (GCloud auth, SSH config, etc.):
+Run the setup script **inside the container** to configure your environment (GCloud auth, SSH config, etc.):
 
 ```bash
 ./scripts/setup-host.sh
 ```
 
-**Note:** This script will:
-- Authenticate with Google Cloud (follow the link in the terminal).
-- Configure your `~/.ssh/config` to include VM configurations (this change is reflected on your host machine).
-- Generate an SSH key if you don't have one.
+This script will:
+* Authenticate with Google Cloud.
+* Configure `~/.ssh/config` to include VM configurations.
+* Generate an SSH key if needed.
+* Configure Git user and email.
 
 ### Managing VMs
 
@@ -46,15 +67,29 @@ Sync projects on the VM:
 ./scripts/sync-projects.sh
 ```
 
+VMs follow the same layout: the workflow repo is cloned into `~/projects/workflow`.
+
+## Creating New Projects
+
+Projects always live under `$HOME/projects`.
+
+To create a new minimal Python project:
+
+```bash
+./scripts/create-project.sh my-project
+```
+
+This creates `~/projects/my-project` with:
+* An empty `README.md`.
+* A minimal `.devcontainer/devcontainer.json` (Python 3).
+* A fresh Git repository.
+
 ## SSH Configuration & Mounts
 
-The Dev Container is configured to bind-mount your local SSH directory (`~/.ssh`) to the container.
-- **Source:** `${localEnv:HOME}/.ssh` (Your host machine's SSH folder)
-- **Target:** `/home/bence/.ssh` (Container's SSH folder)
+The Dev Container bind-mounts your local SSH directory (`~/.ssh`) to `/home/bence/.ssh`.
 
-**What this means:**
-- SSH keys generated inside the container are saved to your host.
-- The `create-vm.sh` script creates VM-specific config files in `~/.ssh/vms/`.
-- The `setup-host.sh` script adds `Include vms/*` to your main `~/.ssh/config`.
-- You can SSH into your VMs directly from your host machine (e.g., `ssh [vm-name]`) without needing to be inside the container.
+* SSH keys generated inside the container are saved to your host.
+* `create-vm.sh` creates VM configs in `~/.ssh/vms/`.
+* `setup-host.sh` adds `Include vms/*` to `~/.ssh/config`.
 
+This allows VS Code Remote SSH to connect to any VM created by these scripts without additional configuration.

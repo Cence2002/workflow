@@ -61,7 +61,7 @@ fi
 cat > "$CONFIG_FILE" <<EOF
 Host $NAME
     HostName $IP
-    User $SSH_USER
+    User $USER
     IdentityFile $KEY_FOR_CONFIG
     ForwardAgent yes
 EOF
@@ -91,8 +91,10 @@ echo "[create-vm] Installing git, cloning workflow and setting up"
 ssh -t -o StrictHostKeyChecking=no "$NAME" \
   "sudo apt-get update -qq && \
    sudo apt-get install -y -qq git && \
-   cd ~ && \
-   git clone $WORKFLOW_URL workflow && \
-   ./workflow/scripts/setup-host.sh"
+   mkdir -p ~/projects && \
+   cd ~/projects && \
+   git clone $WORKFLOW_URL && \
+   cd workflow && \
+   ./scripts/setup-host.sh"
 
 echo "[create-vm] Done"

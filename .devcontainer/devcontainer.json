@@ -6,6 +6,7 @@
   },
   "features": {},
   "mounts": [
+    "source=${localEnv:HOME}/projects,target=/home/bence/projects,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.ssh,target=/home/bence/.ssh,type=bind,consistency=cached"
   ],
   "remoteUser": "bence",
@@ -22,4 +23,3 @@
   },
   "postCreateCommand": "echo 'Devcontainer is ready'"
 }
-
