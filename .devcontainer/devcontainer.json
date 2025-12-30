@@ -4,7 +4,7 @@
     "dockerfile": "Dockerfile",
     "context": ".."
   },
-  // "workspaceFolder": "/workspaces/workflow",
+  "workspaceFolder": "/home/bence/workflow",
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2.5.5": {
       "username": "bence",
@@ -13,10 +13,10 @@
       "upgradePackages": false
     }
   },
-  // "mounts": [
-  //   "source=${localEnv:HOME}/projects,target=/home/bence/projects,type=bind,consistency=cached",
-  //   "source=${localEnv:HOME}/.ssh,target=/home/bence/.ssh,type=bind,consistency=cached"
-  // ],
+  "mounts": [
+    "source=${localEnv:HOME}/projects,target=/home/bence/projects,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh,target=/home/bence/.ssh,type=bind,consistency=cached"
+  ],
   "remoteUser": "bence",
   "customizations": {
     "vscode": {

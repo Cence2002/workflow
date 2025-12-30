@@ -37,6 +37,8 @@ echo "[setup-host] Setting up projects and ssh"
 mkdir -p "$PROJECTS_ROOT"
 
 mkdir -p "$HOME/.ssh/vms"
+chmod 700 "$HOME/.ssh" || true
+chmod 600 "$HOME/.ssh"/* 2>/dev/null || true
 SSH_CONFIG="$HOME/.ssh/config"
 if [ ! -f "$SSH_CONFIG" ]; then
   printf "Include vms/*\n" > "$SSH_CONFIG"
