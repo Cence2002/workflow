@@ -1,11 +1,11 @@
-# Workflow Project
+# Toolchain Project
 
 This project provides scripts to manage Google Cloud VMs for development and a Development Container to ensure a consistent environment.
 
 On any machine (local or VM), the recommended layout is:
 
 ```text
-~/workflow/         # this repo
+~/toolchain/         # this repo
 ~/projects/
   <your-projects>/  # created via scripts/create-project.sh
 ```
@@ -22,13 +22,13 @@ On a new machine or VM:
 
 ```bash
 cd ~
-git clone git@github.com:Cence2002/workflow.git workflow
-cd workflow
+git clone git@github.com:Cence2002/toolchain.git toolchain
+cd toolchain
 ```
 
 ### Using the Dev Container
 
-1. Open `~/workflow` in VS Code or Cursor.
+1. Open `~/toolchain` in VS Code or Cursor.
 2. Click **Reopen in Container** when prompted.
 
 Inside the devcontainer:
@@ -66,7 +66,7 @@ Sync projects on the VM:
 ./scripts/sync-projects.sh
 ```
 
-VMs follow the same layout: the workflow repo is cloned into `~/workflow`.
+VMs follow the same layout: the toolchain repo is cloned into `~/toolchain`.
 
 ## Creating New Projects
 

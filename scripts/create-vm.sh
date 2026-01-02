@@ -87,12 +87,12 @@ while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
   fi
 done
 
-echo "[create-vm] Installing git, cloning workflow and setting up"
+echo "[create-vm] Installing git, cloning toolchain and setting up"
 ssh -t -o StrictHostKeyChecking=no "$NAME" \
   "sudo apt-get update -qq && \
    sudo apt-get install -y -qq git && \
    cd ~ && \
-   git clone $WORKFLOW_URL && \
-   ./workflow/scripts/setup-host.sh"
+   git clone $TOOLCHAIN_URL && \
+   ./toolchain/scripts/setup-host.sh"
 
 echo "[create-vm] Done"
